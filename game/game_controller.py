@@ -26,11 +26,20 @@ class GameController:
         return self.engine.get_questions(self.current_words)
 
     def finish_round(self, answers):
-        story, score = self.engine.generate_story(
-            self.current_template,
-            self.current_words,
-            answers
-        )
+        # Guard against missing round data (e.g. user posts /result directly)
+        if not self.current_template or not self.current_words:
+            return ("No active round. Please start a new game.", 0)
+
+        try:
+            story, score = self.engine.generate_story(
+                self.current_template,
+                self.current_words,
+                answers
+            )
+        except Exception:
+            # Avoid raising 500 on unexpected formatting/answer errors
+            return ("Could not generate story. Please try again.", 0)
+
         self.progress.update_after_game(score, self.level, self.theme)
         self.progress.save()
         return story, score

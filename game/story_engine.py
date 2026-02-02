@@ -25,9 +25,19 @@ class StoryEngine:
 
     def generate_story(self, template, words, answers):
         score = 0
+        # defensively handle words/answers so missing data doesn't throw
+        if not words:
+            words = []
+
         for w in words:
             if answers.get(w):
                 score += 10
 
-        story = template.format(**answers)
+        # Only fill placeholders for the expected words to avoid KeyError
+        fill = {w: answers.get(w, "") for w in words}
+        try:
+            story = template.format(**fill)
+        except Exception:
+            story = ""
+
         return story, score

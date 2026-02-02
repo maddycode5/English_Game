@@ -1,7 +1,7 @@
 import json, os
 
 class Leaderboard:
-    # Get the directory where this file is located, then go up 1 level to English_Game root
+    # store progress.json inside the English_Game/data folder (workspace-relative)
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     FILE = os.path.join(BASE_DIR, "data", "progress.json")
 

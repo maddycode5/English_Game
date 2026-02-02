@@ -2,7 +2,7 @@ import json, os
 from datetime import date, timedelta
 
 class ProgressManager:
-    # Get the directory where this file is located, then go up 1 level to English_Game root
+    # store progress.json inside the English_Game/data folder (workspace-relative)
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     FILE = os.path.join(BASE_DIR, "data", "progress.json")
 
@@ -14,8 +14,11 @@ class ProgressManager:
         if not os.path.exists(self.FILE):
             return self.default()
 
-        with open(self.FILE) as f:
-            all_data = json.load(f)
+        try:
+            with open(self.FILE) as f:
+                all_data = json.load(f)
+        except Exception:
+            return self.default()
 
         return all_data.get(self.username, self.default())
 
@@ -44,17 +47,20 @@ class ProgressManager:
             self.data["current_streak"] = 1
 
         self.data["last_played"] = today.isoformat()
-        self.save()
 
     def update_after_game(self, score, level, theme):
         self.data["total_score"] += score
         self.data["games_played"] += 1
 
     def save(self):
-        os.makedirs("data", exist_ok=True)
+        # ensure parent dir exists
+        os.makedirs(os.path.dirname(self.FILE), exist_ok=True)
         if os.path.exists(self.FILE):
-            with open(self.FILE) as f:
-                all_data = json.load(f)
+            try:
+                with open(self.FILE) as f:
+                    all_data = json.load(f)
+            except Exception:
+                all_data = {}
         else:
             all_data = {}
 
