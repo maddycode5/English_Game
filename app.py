@@ -5,7 +5,13 @@ from leaderboard.leaderboard import Leaderboard
 app = Flask(__name__)
 app.secret_key = "secret123"
 
-game = GameController()
+game = None
+
+def get_game():
+    global game
+    if game is None:
+        game = GameController()
+    return game
 
 @app.route("/")
 def index():
@@ -15,13 +21,13 @@ def index():
 def start():
     username = request.form["username"]
     session["user"] = username
-    game.load_user(username)
+    get_game().load_user(username)
     return redirect(url_for("play"))
 
 
 @app.route("/play")
 def play():
-    raw_data = game.get_level_and_theme_data()
+    raw_data = get_game().get_level_and_theme_data()
 
     # convert int keys → string keys
     data = {str(k): v for k, v in raw_data.items()}
@@ -33,14 +39,14 @@ def play():
 def questions():
     level = int(request.form["level"])
     theme = request.form["theme"]
-    game.prepare_round(level, theme)
-    questions = game.get_questions()
+    get_game().prepare_round(level, theme)
+    questions = get_game().get_questions()
     return render_template("questions.html", questions=questions)
 
 @app.route("/result", methods=["POST"])
 def result():
     answers = request.form.to_dict()
-    story, score = game.finish_round(answers)
+    story, score = get_game().finish_round(answers)
     return render_template("result.html", story=story, score=score)
 
 @app.route("/leaderboard")
@@ -50,7 +56,7 @@ def leaderboard():
 
 @app.route("/progress")
 def progress():
-    data = game.get_progress()
+    data = get_game().get_progress()
     return render_template("progress.html", data=data)
 
 # if __name__ == "__main__":

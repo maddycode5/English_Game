@@ -44,6 +44,7 @@ class ProgressManager:
             self.data["current_streak"] = 1
 
         self.data["last_played"] = today.isoformat()
+        self.save()
 
     def update_after_game(self, score, level, theme):
         self.data["total_score"] += score
