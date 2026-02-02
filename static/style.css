@@ -9,6 +9,7 @@ body {
 .container {
     max-width: 600px;
     margin: 80px auto;
+    padding: 0 20px;
     text-align: center;
 }
 
@@ -176,4 +177,48 @@ select {
 .card h2 {
     margin-bottom: 15px;
     color: #667eea;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+    .container {
+        margin: 30px auto;
+        max-width: 100%;
+        padding: 0 12px;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+    .subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 18px;
+    }
+    .card {
+        padding: 18px;
+    }
+    input[type="text"], select, .question-block input, button {
+        font-size: 1rem;
+        padding: 10px;
+    }
+    .leaderboard-table th, .leaderboard-table td {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+    .story-box {
+        font-size: 1rem;
+        padding: 12px;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+    .container {
+        margin: 60px auto;
+        max-width: 700px;
+    }
+    h1 {
+        font-size: 2rem;
+    }
 }
