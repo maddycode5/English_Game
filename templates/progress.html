@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Progress</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>📊 My Learning Progress</h1>
+    <p class="subtitle">
+        Track your journey, consistency, and achievements.
+    </p>
+
+    <div class="card">
+        <h2>👤 Player Info</h2>
+
+        <p><strong>Name:</strong> {{ data.name }}</p>
+        <p><strong>Total Score:</strong> {{ data.total_score }}</p>
+        <p><strong>Games Played:</strong> {{ data.games_played }}</p>
+        <p><strong>🔥 Current Streak:</strong> {{ data.current_streak }} days</p>
+    </div>
+
+    <div class="card">
+        <h2>🏅 Badges Earned</h2>
+
+        {% if data.badges %}
+            <ul class="badge-list">
+                {% for badge in data.badges %}
+                    <li>🎖 {{ badge }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No badges yet. Keep practicing!</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h2>🎨 Themes Played</h2>
+
+        {% if data.themes_played %}
+            <ul>
+                {% for theme in data.themes_played %}
+                    <li>📌 {{ theme }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You haven’t explored any themes yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="links">
+        <a href="{{ url_for('play') }}">🎮 Play Game</a> |
+        <a href="{{ url_for('leaderboard') }}">🏆 Leaderboard</a> |
+        <a href="{{ url_for('index') }}">🏠 Home</a>
+    </div>
+</div>
+
+</body>
+</html>

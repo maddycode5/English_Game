@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Choose Level & Theme</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>🎯 Choose Your Challenge</h1>
+    <p class="subtitle">
+        Select a difficulty level and a theme to begin your story adventure.
+    </p>
+
+    <div class="card">
+        <form action="{{ url_for('questions') }}" method="POST">
+
+            <!-- LEVEL SELECTION -->
+            <label for="level">Difficulty Level</label>
+            <select name="level" id="level" required onchange="updateThemes()">
+                {% for level, info in data.items() %}
+                    <option value="{{ level }}">
+                        Level {{ level }} – {{ info.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <!-- THEME SELECTION -->
+            <label for="theme">Story Theme</label>
+            <select name="theme" id="theme" required></select>
+
+            <button type="submit">🚀 Start Story</button>
+        </form>
+    </div>
+
+    <div class="links">
+        <a href="{{ url_for('progress') }}">📊 View My Progress</a> |
+        <a href="{{ url_for('leaderboard') }}">🏆 Leaderboard</a>
+    </div>
+</div>
+
+<!-- ✅ FLASK-SAFE JSON -->
+<script>
+    const levelsData = {{data | tojson | safe }};
+</script>
+
+<script>
+    function updateThemes() {
+        const levelSelect = document.getElementById("level");
+        const themeSelect = document.getElementById("theme");
+
+        const selectedLevel = levelSelect.value;
+        const themes = levelsData[selectedLevel].themes;
+
+        themeSelect.innerHTML = "";
+
+        for (const theme in themes) {
+            const option = document.createElement("option");
+            option.value = theme;
+            option.textContent = theme;
+            themeSelect.appendChild(option);
+        }
+    }
+
+    // initialize themes on page load
+    updateThemes();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grammar Challenge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>🧠 Grammar Challenge</h1>
+    <p class="subtitle">
+        Read the definition carefully and enter a suitable word.
+    </p>
+
+    <div class="card">
+        <form action="{{ url_for('result') }}" method="POST">
+
+            {% for q in questions %}
+                <div class="question-block">
+                    <h3>{{ q.type|capitalize }}</h3>
+
+                    <p><strong>Definition:</strong> {{ q.definition }}</p>
+                    <p><strong>Example:</strong> {{ q.example }}</p>
+
+                    <input
+                        type="text"
+                        name="{{ q.type }}"
+                        placeholder="Enter a {{ q.type }}"
+                        required
+                    >
+                </div>
+            {% endfor %}
+
+            <button type="submit">📖 Generate Story</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

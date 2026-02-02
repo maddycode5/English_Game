@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Story Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>🎉 Story Created!</h1>
+    <p class="subtitle">
+        Great job! Here’s the story you created using your grammar skills.
+    </p>
+
+    <div class="card">
+        <h2>📖 Your Story</h2>
+        <p class="story-box">
+            {{ story }}
+        </p>
+
+        <hr>
+
+        <h3>⭐ Score Earned: {{ score }}</h3>
+
+        {% if badges %}
+            <h3>🏅 New Badges</h3>
+            <ul class="badge-list">
+                {% for badge in badges %}
+                    <li>🎖 {{ badge }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if streak %}
+            <p class="streak">
+                🔥 Current Streak: <strong>{{ streak }} days</strong>
+            </p>
+        {% endif %}
+    </div>
+
+    <div class="links">
+        <a href="{{ url_for('play') }}">🔁 Play Again</a> |
+        <a href="{{ url_for('progress') }}">📊 My Progress</a> |
+        <a href="{{ url_for('leaderboard') }}">🏆 Leaderboard</a>
+    </div>
+</div>
+
+</body>
+</html>
