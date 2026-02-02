@@ -53,5 +53,5 @@ def progress():
     data = game.get_progress()
     return render_template("progress.html", data=data)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# if __name__ == "__main__":
+    # app.run(debug=True)
