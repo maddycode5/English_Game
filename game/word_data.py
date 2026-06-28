@@ -1,10 +1,10 @@
 WORD_TYPES = {
     "adjective": {
-        "definition": "Describes a noun",
+        "definition": "Describes  noun",
         "example": "happy, brave"
     },
     "noun": {
-        "definition": "Name of a person, place, animal, or thing",
+        "definition": "Name of the person, place, animal, or thing",
         "example": "boy, city, teacher"
     },
     "verb": {
@@ -25,7 +25,7 @@ WORD_TYPES = {
     },
     "object": {
         "definition": "A thing that can be touched or used",
-        "example": "book, sword, bag"
+        "example": "book, sword, bag, table"
     }
 }
 
